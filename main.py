@@ -1,7 +1,7 @@
-from battle_scripts import batalha
 from character_scripts import characters
 from time import sleep
 from pokemons_scripts import poke_list
+from city_scripts import cities
 
 import os
 
@@ -18,7 +18,14 @@ if __name__ == '__main__':
     print('\n')
     sleep(0.5)
     nome = str(input('Qual o seu nome aventureiro? --> ')).capitalize()
-    jogador = characters.Player(nome=nome)
+    if nome:
+        jogador = characters.Player(nome=nome)
+    else:
+        while not nome:
+            os.system('clear')
+            characters.TelaInicial()
+            nome = str(input('Qual o seu nome aventureiro? --> ')).capitalize()
+            jogador = characters.Player(nome=nome)
     print()
     print('Hmmm... ')
     sleep(1.5)
@@ -45,11 +52,49 @@ if __name__ == '__main__':
     for _ in range(len(poke_list.pokemons_iniciais)):
         print(f'    {_ + 1}:{poke_list.pokemons_iniciais[_]}', end=' ')
     print('\n')
-    escolha = int(input('--> '))
-    print(f'\nParabéns, voce escolheu {poke_list.pokemons_iniciais[(escolha - 1)].apelido}\n')
-    sleep(2)
-    jogador.pokemons.append(characters.poke_list.pokemons_iniciais[(escolha - 1)])
-    poke_list.pokemons_iniciais.remove(poke_list.pokemons_iniciais[(escolha - 1)])
+    escolha = (input('--> '))
+    if escolha:
+        if escolha.isnumeric():
+            if int(escolha) in (1, 2, 3):
+                int(escolha)
+                print(f'\nParabéns, voce escolheu {poke_list.pokemons_iniciais[(int(escolha) - 1)].apelido}\n')
+                sleep(2)
+                jogador.pokemons.append(characters.poke_list.pokemons_iniciais[(int(escolha) - 1)])
+                poke_list.pokemons_iniciais.remove(poke_list.pokemons_iniciais[(int(escolha) - 1)])
+        else:
+            os.system('clear')
+            characters.TelaInicial()
+            print(f'\n\n\033[31m CARACTERES INVALIDOS, POR FAVOR USE OS INDICADOS NO MENU\033[m')
+            for _ in range(6):
+                print(_ + 1, end=' ')
+                sleep(0.8)
+    while not escolha:
+        os.system('clear')
+        characters.TelaInicial()
+        print(f'Escolha entre esses pokemons para iniciar sua jornada:')
+        print()
+        for _ in range(len(poke_list.pokemons_iniciais)):
+            print(f'    {_ + 1}:{poke_list.pokemons_iniciais[_]}', end=' ')
+        print('\n')
+        escolha = (input('--> '))
+        if escolha:
+            if escolha.isnumeric():
+                if int(escolha) in (1, 2, 3):
+                    print(f'\nParabéns, voce escolheu {poke_list.pokemons_iniciais[(int(escolha) - 1)].apelido}\n')
+                    sleep(2)
+                    jogador.pokemons.append(characters.poke_list.pokemons_iniciais[(int(escolha) - 1)])
+                    poke_list.pokemons_iniciais.remove(poke_list.pokemons_iniciais[(int(escolha) - 1)])
+            else:
+                os.system('clear')
+                characters.TelaInicial()
+                print(f'\n\n\033[31m CARACTERES INVALIDOS, POR FAVOR USE OS INDICADOS NO MENU\033[m')
+                for _ in range(6):
+                    print(_ + 1, end=' ')
+                    sleep(0.8)
+
+    os.system('clear')
+    characters.TelaInicial()
+    print()
     rival = characters.Rival(nome='Gary')
     dialogo_treta = [f'\033[33mVamos testar sua habilidade, esse é meu neto, {rival.nome}!!!',
                      'Ele também esta iniciando sua jornada hoje',
@@ -68,5 +113,6 @@ if __name__ == '__main__':
     print('\n')
     os.system('clear')
     characters.TelaInicial()
-    ().city(player=jogador)
+    cidade_atual = cities.Pallet()
+    cidade_atual.city(player=jogador)
 

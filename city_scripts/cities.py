@@ -1,6 +1,6 @@
-from random import randint, choice
-from characters import TelaInicial, Rival
-from poke_list import *
+from time import sleep
+from character_scripts import characters
+from pokemons_scripts import poke_list
 import os
 
 
@@ -8,8 +8,7 @@ class Pallet:
 
     def __init__(self):
         self.nome = 'Pallet'
-        self.pokemons = poke_pallet
-        self.ginasio = []
+        self.pokemons = poke_list.poke_pallet
 
     def city_name(self):
         print(f'-=' * 40)
@@ -20,16 +19,20 @@ class Pallet:
         os.system('clear')
         if self.nome not in player.cidades_visitadas:
             player.cidades_visitadas.append(self.nome)
-        TelaInicial()
+        characters.TelaInicial()
         self.city_name()
         while True:
             print('O que deseja fazer?\n')
             print(f'1 - {"Treinar Pokemons"}       2 - {"Lutar contra Treinadores"}\n'
                                 f'3 - {"Ir ao Ginásio"}          4 - {"Trocar de Cidade"}')
-            escolha = int(input('\n--> '))
-            if escolha == 1:
-                player.batalha_pokemon(pokemon=poke_pallet)
-            elif escolha == 2:
-                player.batalha(Rival(pokemons=poke_pallet))
-            elif escolha == 3:
-                break
+            escolha = (input('\n--> '))
+            if escolha.isnumeric():
+                if int(escolha) == 1:
+                    player.batalha_pokemon(pokemon=self.pokemons)
+                elif int(escolha) == 2:
+                    player.batalha(characters.Rival(pokemons=self.pokemons))
+                elif int(escolha) == 3:
+                    break
+            else:
+                print('Caracteres invalido, use os numeros indicados no menu')
+                sleep(4)

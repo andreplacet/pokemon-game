@@ -1,5 +1,5 @@
 from random import randint, choice
-from poke_list import POKEMONS
+from pokemons_scripts import poke_list
 from time import sleep
 import os
 
@@ -67,70 +67,81 @@ class MainCharacter:
                       f'{enemy_pokemon.apelido}: \033[32m'
                       f' HP({enemy_pokemon.vida:.0f})\033[m')
                 print()
-                print(f'Escolha seu ataque')
-                escolha = int(input(f'  1  -> Ataque normal\n'
-                                    f'  2 -> {meu_pokemon.ataquesp}\n'
-                                    f' --> '))
-                if escolha == 1:
-                    meu_pokemon.atacar(enemy_pokemon)
-                    enemy_pokemon.atacar(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
-                elif escolha == 2:
-                    meu_pokemon.ataqueespecial(enemy_pokemon)
-                    enemy_pokemon.ataqueespecial(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
-                elif escolha == 3:
-                    meu_pokemon.ataqueespecial(enemy_pokemon)
-                    meu_pokemon.ataqueespecial(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
-                else:
-                    meu_pokemon.ataqueespecial(enemy_pokemon)
-                    meu_pokemon.ataqueespecial(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
-                if meu_pokemon.vida <= 0:
-                    print(f'{enemy} Ganhou a bataha!')
-                    print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.2:.0f} pontos de Exp')
-                    meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.2:.0f}')
+                print(f'Escolha sua ação')
+                escolha = input(f'  1  -> Ataque normal\n'
+                                    f'  2  -> {meu_pokemon.ataquesp}\n'
+                                    f' --> ')
+                if escolha:
+                    if escolha.isnumeric():
+                        if int(escolha) in (1, 2):
+                            if int(escolha) == 1:
+                                meu_pokemon.atacar(enemy_pokemon)
+                                enemy_pokemon.atacar(meu_pokemon)
+                                os.system('clear')
+                                TelaInicial()
+                            elif int(escolha) == 2:
+                                meu_pokemon.ataqueespecial(enemy_pokemon)
+                                enemy_pokemon.ataqueespecial(meu_pokemon)
+                                os.system('clear')
+                                TelaInicial()
+
+                            if meu_pokemon.vida <= 0:
+                                print(f'{enemy_pokemon.especie} Ganhou a bataha!')
+                                print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.2:.0f} pontos de Exp')
+                                meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.2:.0f}')
+                                sleep(4)
+                                os.system('clear')
+                                TelaInicial()
+                                meu_pokemon.vida = meu_pokemon.maxvida
+                                if meu_pokemon.exp == meu_pokemon.exptoup:
+                                    print(f'{meu_pokemon.apelido} subiu de level!')
+                                    meu_pokemon.level += 1
+                                    meu_pokemon.atak += randint(1, 4)
+                                    meu_pokemon.defesa += randint(1, 4)
+                                    meu_pokemon.atakesp += randint(2, 4)
+                                    meu_pokemon.defesaesp += randint(2, 4)
+                                    meu_pokemon.speed += randint(1, 4)
+                                    meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
+                                    meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
+                                    meu_pokemon.evolucao()
+                                break
+                            elif enemy_pokemon.vida <= 0:
+                                print(f'{self} Ganhou a bataha!')
+                                print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.5:.0f} pontos de Exp')
+                                meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.5:.0f}')
+                                sleep(4)
+                                os.system('clear')
+                                TelaInicial()
+                                meu_pokemon.vida = meu_pokemon.maxvida
+                                if meu_pokemon.exp == meu_pokemon.exptoup:
+                                    print(f'{meu_pokemon.apelido} subiu de level!')
+                                    meu_pokemon.level += 1
+                                    meu_pokemon.atak += randint(1, 4)
+                                    meu_pokemon.defesa += randint(1, 4)
+                                    meu_pokemon.atakesp += randint(2, 4)
+                                    meu_pokemon.defesaesp += randint(2, 4)
+                                    meu_pokemon.speed += randint(1, 4)
+                                    meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
+                                    meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
+                                    meu_pokemon.evolucao()
+                                break
+                        else:
+                            print('\n \033[31m CARACTERES INVALIDOS !! USE OS NÚMEROS INDICADOS NO MENU!\033[m\n')
+                            sleep(4)
+                            os.system('clear')
+                            TelaInicial()
+                    elif escolha.isalpha():
+                        print('\n')
+                        print('\033[31m CARACTERES INVALIDOS, USE OS NÚMEROS INDICADOS NO MENU ')
+                        sleep(4)
+                        os.system('clear')
+                        TelaInicial()
+                elif escolha.isalpha():
+                    print('\n \033[31m DADOS INVALIDOS, USE OS NÚMEROS INDICADOS NO MENU')
                     sleep(4)
                     os.system('clear')
                     TelaInicial()
-                    meu_pokemon.vida = meu_pokemon.maxvida
-                    if meu_pokemon.exp == meu_pokemon.exptoup:
-                        print(f'{meu_pokemon.apelido} subiu de level!')
-                        meu_pokemon.level += 1
-                        meu_pokemon.atak += randint(1, 4)
-                        meu_pokemon.defesa += randint(1, 4)
-                        meu_pokemon.atakesp += randint(2, 4)
-                        meu_pokemon.defesaesp += randint(2, 4)
-                        meu_pokemon.speed += randint(1, 4)
-                        meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
-                        meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
-                        meu_pokemon.evolucao()
-                    break
-                elif enemy_pokemon.vida <= 0:
-                    print(f'{self} Ganhou a bataha!')
-                    print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.2:.0f} pontos de Exp')
-                    meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.2:.0f}')
-                    sleep(4)
-                    os.system('clear')
-                    TelaInicial()
-                    meu_pokemon.vida = meu_pokemon.maxvida
-                    if meu_pokemon.exp == meu_pokemon.exptoup:
-                        print(f'{meu_pokemon.apelido} subiu de level!')
-                        meu_pokemon.level += 1
-                        meu_pokemon.atak += randint(1, 4)
-                        meu_pokemon.defesa += randint(1, 4)
-                        meu_pokemon.atakesp += randint(2, 4)
-                        meu_pokemon.defesaesp += randint(2, 4)
-                        meu_pokemon.speed += randint(1, 4)
-                        meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
-                        meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
-                        meu_pokemon.evolucao()
-                    break
+
         else:
             print('Os jogadores não possuem pokemons')
 
@@ -147,66 +158,150 @@ class MainCharacter:
                       f'{enemy_pokemon.apelido}: \033[32m'
                       f' HP({enemy_pokemon.vida:.0f})\033[m')
                 print()
-                print(f'Escolha seu ataque')
-                escolha = int(input(f'  1  -> Ataque normal\n'
-                                    f'  2 -> {meu_pokemon.ataquesp}\n'
+                print(f'Escolha sua ação')
+                escolha = (input(f'  1  -> Ataque normal\n'
+                                    f'  2  -> {meu_pokemon.ataquesp}\n'
+                                    f'  3  -> Capturar Pokemon\n'
+                                    f'  4  -> Usar Itens'
                                     f' --> '))
-                if escolha == 1:
-                    meu_pokemon.atacar(enemy_pokemon)
-                    enemy_pokemon.atacar(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
-                elif escolha == 2:
-                    meu_pokemon.ataqueespecial(enemy_pokemon)
-                    enemy_pokemon.ataqueespecial(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
+                if escolha:
+                    if escolha.isalpha():
+                        while escolha not in (1, 2, 3, 4):
+                            os.system('clear')
+                            TelaInicial()
+                            print()
+                            print(f'{meu_pokemon.apelido}: \033[32mHP({meu_pokemon.vida:.0f})\033[m         '
+                                  f'{enemy_pokemon.apelido}: \033[32m'
+                                  f' HP({enemy_pokemon.vida:.0f})\033[m')
+                            print()
+                            print(f'Escolha sua ação')
+                            escolha = (input(f'  1  -> Ataque normal\n'
+                                                f'  2  -> {meu_pokemon.ataquesp}\n'
+                                                f'  3  -> Capturar Pokemon\n'
+                                                f'  4  -> Usar Itens'
+                                                f' --> '))
+                            if int(escolha) == 1:
+                                meu_pokemon.atacar(enemy_pokemon)
+                                enemy_pokemon.atacar(meu_pokemon)
+                                os.system('clear')
+                                TelaInicial()
+                            elif int(escolha) == 2:
+                                meu_pokemon.ataqueespecial(enemy_pokemon)
+                                enemy_pokemon.ataqueespecial(meu_pokemon)
+                                os.system('clear')
+                                TelaInicial()
 
+                            if meu_pokemon.vida <= 0:
+                                print(f'{enemy_pokemon.especie} Ganhou a bataha!')
+                                print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.2:.0f} pontos de Exp')
+                                meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.2:.0f}')
+                                sleep(4)
+                                os.system('clear')
+                                TelaInicial()
+                                meu_pokemon.vida = meu_pokemon.maxvida
+                                if meu_pokemon.exp == meu_pokemon.exptoup:
+                                    print(f'{meu_pokemon.apelido} subiu de level!')
+                                    meu_pokemon.level += 1
+                                    meu_pokemon.atak += randint(1, 4)
+                                    meu_pokemon.defesa += randint(1, 4)
+                                    meu_pokemon.atakesp += randint(2, 4)
+                                    meu_pokemon.defesaesp += randint(2, 4)
+                                    meu_pokemon.speed += randint(1, 4)
+                                    meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
+                                    meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
+                                    meu_pokemon.evolucao()
+                                break
+                            elif enemy_pokemon.vida <= 0:
+                                print(f'{self} Ganhou a bataha!')
+                                print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.5:.0f} pontos de Exp')
+                                meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.5:.0f}')
+                                sleep(4)
+                                os.system('clear')
+                                TelaInicial()
+                                meu_pokemon.vida = meu_pokemon.maxvida
+                                if meu_pokemon.exp == meu_pokemon.exptoup:
+                                    print(f'{meu_pokemon.apelido} subiu de level!')
+                                    meu_pokemon.level += 1
+                                    meu_pokemon.atak += randint(1, 4)
+                                    meu_pokemon.defesa += randint(1, 4)
+                                    meu_pokemon.atakesp += randint(2, 4)
+                                    meu_pokemon.defesaesp += randint(2, 4)
+                                    meu_pokemon.speed += randint(1, 4)
+                                    meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
+                                    meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
+                                    meu_pokemon.evolucao()
+                                break
+                    else:
+                        print('\n')
+                        print('\033[31m CARACTERES INVALIDOS, USE OS NÚMEROS INDICADOS NO MENU ')
+                        sleep(4)
+                        os.system('clear')
+                        TelaInicial()
                 else:
-                    meu_pokemon.ataqueespecial(enemy_pokemon)
-                    meu_pokemon.ataqueespecial(meu_pokemon)
-                    os.system('clear')
-                    TelaInicial()
-                if meu_pokemon.vida <= 0:
-                    print(f'{enemy_pokemon.especie} Ganhou a bataha!')
-                    print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.2:.0f} pontos de Exp')
-                    meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.2:.0f}')
-                    sleep(4)
-                    os.system('clear')
-                    TelaInicial()
-                    meu_pokemon.vida = meu_pokemon.maxvida
-                    if meu_pokemon.exp == meu_pokemon.exptoup:
-                        print(f'{meu_pokemon.apelido} subiu de level!')
-                        meu_pokemon.level += 1
-                        meu_pokemon.atak += randint(1, 4)
-                        meu_pokemon.defesa += randint(1, 4)
-                        meu_pokemon.atakesp += randint(2, 4)
-                        meu_pokemon.defesaesp += randint(2, 4)
-                        meu_pokemon.speed += randint(1, 4)
-                        meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
-                        meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
-                        meu_pokemon.evolucao()
-                    break
-                elif enemy_pokemon.vida <= 0:
-                    print(f'{self} Ganhou a bataha!')
-                    print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.5:.0f} pontos de Exp')
-                    meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.5:.0f}')
-                    sleep(4)
-                    os.system('clear')
-                    TelaInicial()
-                    meu_pokemon.vida = meu_pokemon.maxvida
-                    if meu_pokemon.exp == meu_pokemon.exptoup:
-                        print(f'{meu_pokemon.apelido} subiu de level!')
-                        meu_pokemon.level += 1
-                        meu_pokemon.atak += randint(1, 4)
-                        meu_pokemon.defesa += randint(1, 4)
-                        meu_pokemon.atakesp += randint(2, 4)
-                        meu_pokemon.defesaesp += randint(2, 4)
-                        meu_pokemon.speed += randint(1, 4)
-                        meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
-                        meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
-                        meu_pokemon.evolucao()
-                    break
+                    while not escolha:
+                        if escolha.isalpha():
+                            while escolha not in (1, 2, 3, 4):
+                                os.system('clear')
+                                TelaInicial()
+                                print()
+                                print(f'{meu_pokemon.apelido}: \033[32mHP({meu_pokemon.vida:.0f})\033[m         '
+                                      f'{enemy_pokemon.apelido}: \033[32m'
+                                      f' HP({enemy_pokemon.vida:.0f})\033[m')
+                                print()
+                                print(f'Escolha sua ação')
+                                escolha = (input(f'  1  -> Ataque normal\n'
+                                                 f'  2  -> {meu_pokemon.ataquesp}\n'
+                                                 f'  3  -> Capturar Pokemon\n'
+                                                 f'  4  -> Usar Itens'
+                                                 f' --> '))
+                                if int(escolha) == 1:
+                                    meu_pokemon.atacar(enemy_pokemon)
+                                    enemy_pokemon.atacar(meu_pokemon)
+                                elif int(escolha) == 2:
+                                    meu_pokemon.ataqueespecial(enemy_pokemon)
+                                    enemy_pokemon.ataqueespecial(meu_pokemon)
+
+                                if meu_pokemon.vida <= 0:
+                                    print(f'{enemy_pokemon.especie} Ganhou a bataha!')
+                                    print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.2:.0f} pontos de Exp')
+                                    meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.2:.0f}')
+                                    sleep(4)
+                                    os.system('clear')
+                                    TelaInicial()
+                                    meu_pokemon.vida = meu_pokemon.maxvida
+                                    if meu_pokemon.exp == meu_pokemon.exptoup:
+                                        print(f'{meu_pokemon.apelido} subiu de level!')
+                                        meu_pokemon.level += 1
+                                        meu_pokemon.atak += randint(1, 4)
+                                        meu_pokemon.defesa += randint(1, 4)
+                                        meu_pokemon.atakesp += randint(2, 4)
+                                        meu_pokemon.defesaesp += randint(2, 4)
+                                        meu_pokemon.speed += randint(1, 4)
+                                        meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
+                                        meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
+                                        meu_pokemon.evolucao()
+                                    break
+                                elif enemy_pokemon.vida <= 0:
+                                    print(f'{self} Ganhou a bataha!')
+                                    print(f'{meu_pokemon.apelido} ganhou {enemy_pokemon.level * 1.5:.0f} pontos de Exp')
+                                    meu_pokemon.exp += int(f'{enemy_pokemon.level * 1.5:.0f}')
+                                    sleep(4)
+                                    os.system('clear')
+                                    TelaInicial()
+                                    meu_pokemon.vida = meu_pokemon.maxvida
+                                    if meu_pokemon.exp == meu_pokemon.exptoup:
+                                        print(f'{meu_pokemon.apelido} subiu de level!')
+                                        meu_pokemon.level += 1
+                                        meu_pokemon.atak += randint(1, 4)
+                                        meu_pokemon.defesa += randint(1, 4)
+                                        meu_pokemon.atakesp += randint(2, 4)
+                                        meu_pokemon.defesaesp += randint(2, 4)
+                                        meu_pokemon.speed += randint(1, 4)
+                                        meu_pokemon.maxvida += int(meu_pokemon.level * 1.5)
+                                        meu_pokemon.exptoup = int(meu_pokemon.exptoup * 2)
+                                        meu_pokemon.evolucao()
+                                    break
+
         else:
             print('Os jogadores não possuem pokemons')
 
@@ -229,7 +324,7 @@ class Player(MainCharacter):
 
     def buy_itens(self, item):
         self.itens.append(item)
-        print(f'Você adquiriu um {item}!!!')
+        print(f'Você adquiriu um(a) {item}!!!')
 
     def use_itens(self, item, pokemon):
         self.pokemons[pokemon] = self.itens[item]
@@ -260,4 +355,4 @@ class Rival(MainCharacter):
             self.nome = choice(NOMES)
         if not pokemons:
             for i in range(randint(1, 3)):
-                pokemons.append(choice(POKEMONS))
+                pokemons.append(choice(poke_list.pokemons_iniciais))

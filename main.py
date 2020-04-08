@@ -1,10 +1,9 @@
-from character_scripts import characters
-from time import sleep
-from pokemons_scripts import poke_list
-from city_scripts import cities
-
 import os
+from time import sleep
 
+from character_scripts import characters
+from city_scripts import cities
+from pokemons_scripts import poke_list
 
 if __name__ == '__main__':
     os.system('clear')
@@ -53,22 +52,7 @@ if __name__ == '__main__':
         print(f'    {_ + 1}:{poke_list.pokemons_iniciais[_]}', end=' ')
     print('\n')
     escolha = (input('--> '))
-    if escolha:
-        if escolha.isnumeric():
-            if int(escolha) in (1, 2, 3):
-                int(escolha)
-                print(f'\nParabéns, voce escolheu {poke_list.pokemons_iniciais[(int(escolha) - 1)].apelido}\n')
-                sleep(2)
-                jogador.pokemons.append(characters.poke_list.pokemons_iniciais[(int(escolha) - 1)])
-                poke_list.pokemons_iniciais.remove(poke_list.pokemons_iniciais[(int(escolha) - 1)])
-        else:
-            os.system('clear')
-            characters.TelaInicial()
-            print(f'\n\n\033[31m CARACTERES INVALIDOS, POR FAVOR USE OS INDICADOS NO MENU\033[m')
-            for _ in range(6):
-                print(_ + 1, end=' ')
-                sleep(0.8)
-    while not escolha:
+    while True:
         os.system('clear')
         characters.TelaInicial()
         print(f'Escolha entre esses pokemons para iniciar sua jornada:')
@@ -84,13 +68,11 @@ if __name__ == '__main__':
                     sleep(2)
                     jogador.pokemons.append(characters.poke_list.pokemons_iniciais[(int(escolha) - 1)])
                     poke_list.pokemons_iniciais.remove(poke_list.pokemons_iniciais[(int(escolha) - 1)])
+                    break
             else:
                 os.system('clear')
                 characters.TelaInicial()
                 print(f'\n\n\033[31m CARACTERES INVALIDOS, POR FAVOR USE OS INDICADOS NO MENU\033[m')
-                for _ in range(6):
-                    print(_ + 1, end=' ')
-                    sleep(0.8)
 
     os.system('clear')
     characters.TelaInicial()

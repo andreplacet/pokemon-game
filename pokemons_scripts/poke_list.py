@@ -6,5 +6,5 @@ bulba = pokemon.Bulbassaur()
 cater = pokemon.Caterpie()
 wee = pokemon.Weedle()
 
-POKEMONS = [charmander, squirtle, bulba]
+pokemons_iniciais = [charmander, squirtle, bulba]
 poke_pallet = [cater, wee]

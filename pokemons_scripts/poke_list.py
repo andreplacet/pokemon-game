@@ -1,10 +1,10 @@
-from pokemon import *
+from pokemons_scripts import pokemon
 
-charmander = Charmander()
-squirtle = Squirtle()
-bulba = Bulbassaur()
-cater = Caterpie()
-wee = Weedle()
+charmander = pokemon.Charmander()
+squirtle = pokemon.Squirtle()
+bulba = pokemon.Bulbassaur()
+cater = pokemon.Caterpie()
+wee = pokemon.Weedle()
 
 POKEMONS = [charmander, squirtle, bulba]
 poke_pallet = [cater, wee]

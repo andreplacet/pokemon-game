@@ -163,7 +163,7 @@ class MainCharacter:
                                     f'  4  -> Usar Itens'
                                     f' --> '))
                 if escolha:
-                    if escolha.isalpha():
+                    if escolha.isnumeric():
                         while escolha not in (1, 2, 3, 4):
                             os.system('clear')
                             TelaInicial()
@@ -273,14 +273,19 @@ class Player(MainCharacter):
         self.show_pokemons()
         if self.pokemons:
             while True:
-                escolha = int(input('\nEscolha seu pokemon: '))
-                try:
-                    pokemon_escolido = escolha
-                    poke_choice = self.pokemons[pokemon_escolido - 1]
-                    print(f'\n\033[31m{poke_choice}\033[m eu escolho você!!!')
-                    return poke_choice
-                except:
-                    print('Escolha Invalida!!')
+                escolha = input('\nEscolha seu pokemon: ')
+                if escolha:
+                    if escolha.isnumeric():
+                        try:
+                            pokemon_escolido = int(escolha)
+                            poke_choice = self.pokemons[pokemon_escolido - 1]
+                            print(f'\n\033[31m{poke_choice}\033[m eu escolho você!!!')
+                            return poke_choice
+                        except:
+                            print('Escolha Invalida!!')
+                    else:
+                        print(' wCARACTERES INVALIDOS, POR FAVOR USO OS NÚMEROS INDICADOS NO MENU ')
+
         else:
             print(f'{self} Não possui Pokemons!!!')
 

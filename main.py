@@ -18,13 +18,19 @@ if __name__ == '__main__':
     sleep(0.5)
     nome = str(input('Qual o seu nome aventureiro? --> ')).capitalize()
     if nome:
-        jogador = characters.Player(nome=nome)
+        if len(nome) >= 4:
+            jogador = characters.Player(nome=nome)
+        else:
+            print('Seu nome deve ter no minimo 4(quatro) caracteres válidos')
     else:
         while not nome:
             os.system('clear')
             characters.TelaInicial()
             nome = str(input('Qual o seu nome aventureiro? --> ')).capitalize()
-            jogador = characters.Player(nome=nome)
+            if len(nome) >= 4:
+                jogador = characters.Player(nome=nome)
+            else:
+                print('Seu nome deve ter no minimo 4(quatro) caracteres válidos')
     print()
     print('Hmmm... ')
     sleep(1.5)
@@ -95,6 +101,6 @@ if __name__ == '__main__':
     print('\n')
     os.system('clear')
     characters.TelaInicial()
-    cidade_atual = cities.Pallet()
-    cidade_atual.city(player=jogador)
+    jogador.cidade_atual = cities.Pallet()
+    jogador.cidade_atual.city(player=jogador)
 
